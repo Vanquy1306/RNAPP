@@ -7,79 +7,29 @@ import {
     TouchableHighLight,
     TouchableOpacity,
     Dimensions,
-    Button,
-    Modal
+    Button
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome"
-import EasyButton from "../../Shared/StyledComponents/EasyButton";
 
 var { width } = Dimensions.get("window");
 
 const ListItem = (props) => {
 
-    const [modalVisible, setModalVisible] = useState(false)
 
-    return(
+    return (
         <View>
-            <Modal
-                animationType="fade"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(false)
-                }}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <TouchableOpacity
-                            underlayColor="#E8E8E8"
-                            onPress={() => {
-                                setModalVisible(false)
-                            }}
-                            style={{ 
-                                alignSelf: "flex-end",
-                                position: "absolute",
-                                top: 5,
-                                right: 10
-                            }}
-                        >
-                            <Icon name="close" size={20} />
-                        </TouchableOpacity>
-                        <EasyButton 
-                        medium 
-                        secondary
-                        onPress={() => [
-                            props.navigation.navigate("ProductForm", { item: props}),
-                            setModalVisible(false)
-                        ]}
-                        >
-                            <Text style={styles.textStyle}>Edit</Text>
-                        </EasyButton>
-                        <EasyButton 
-                        medium 
-                        danger
-                        onPress={() => [props.delete(props._id), setModalVisible(false)]}
-                        >
-                            <Text style={styles.textStyle}>Delete</Text>
-                        </EasyButton>
-                    </View>
-                </View>
-
-            </Modal>
             <TouchableOpacity
-                onPress={() => {
-                    props.navigation.navigate("Product Detail", { item: props })
-                }}
-                onLongPress={() => setModalVisible(true)}
                 style={[styles.container, {
                     backgroundColor: props.index % 2 == 0 ? "white" : "gainsboro"
                 }]}
             >
-                <Image 
+
+                <Image
                     source={{
                         uri: props.image
-                        ? props.image
-                        : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
+                            ? props.image
+                            : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
+
                     }}
                     resizeMode="contain"
                     style={styles.image}
@@ -92,7 +42,6 @@ const ListItem = (props) => {
         </View>
     )
 }
-
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',

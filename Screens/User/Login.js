@@ -11,8 +11,8 @@ import { loginUser } from "../../Context/actions/Auth.actions";
 
 const Login = (props) => {
   const context = useContext(AuthGlobal);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@gmail.com");
+  const [password, setPassword] = useState("130600");
   const [error, setError] = useState("");
 
   useEffect(() => {
