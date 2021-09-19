@@ -79,7 +79,7 @@ const ProductContainer = (props) => {
                 ? [setProductsCtg(initialState), setActive(true)]
                 : [
                     setProductsCtg(
-                        products.filter((i) => i.category.$oid === ctg),
+                        products.filter((i) => i.category._id === ctg),
                         setActive(true)
                     ),
                 ];
@@ -130,7 +130,7 @@ const ProductContainer = (props) => {
                                     return (
                                         <ProductList
                                             navigation={props.navigation}
-                                            key={item._id.$oid}
+                                            key={item._id}
                                             item={item}
                                         />
                                     )

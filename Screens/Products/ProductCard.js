@@ -7,11 +7,11 @@ import {
     Text,
     Button
 } from 'react-native'
-
 import Toast from 'react-native-toast-message'
 import EasyButton from "../../Shared/StyledComponents/EasyButton"
 import { connect } from 'react-redux'
 import * as actions from '../../Redux/Actions/cartActions';
+
 var { width } = Dimensions.get("window");
 
 const ProductCard = (props) => {
@@ -33,40 +33,36 @@ const ProductCard = (props) => {
             </Text>
             <Text style={styles.price}>${price}</Text>
 
-             { countInStock > 0 ? (
+            { countInStock > 0 ? (
                 <View style={{ marginBottom: 60 }}>
-                    <Button title={'Add'}
-                    color={'green'}
-                    onPress={() => {
-                        props.addItemToCart(props)
-                    }}
-                    />
-                    {/* <EasyButton 
+                    <EasyButton 
                     primary
                     medium
-                    // onPress={() => {
-                    //     props.addItemToCart(props.id),
-                    //     Toast.show({
-                    //         topOffset: 60,
-                    //         type: "success",
-                    //         text1: `${name} added to Cart`,
-                    //         text2: "Go to your cart to complete order"
-                    //     })
-                    // }}
+                    onPress={() => {
+                        props.addItemToCart(props.id),
+                        Toast.show({
+                            topOffset: 60,
+                            type: "success",
+                            text1: `${name} added to Cart`,
+                            text2: "Go to your cart to complete order"
+                        })
+                    }}
                     >
                         <Text style={{ color: "white"}}>Add</Text>
-                    </EasyButton> */}
+                    </EasyButton>
                 </View>
             ) : <Text style={{ marginTop: 20 }}>Currently Unavailable</Text>}
         </View>
     )
 }
+
 const mapDispatchToProps = (dispatch) => {
     return {
         addItemToCart: (product) => 
             dispatch(actions.addToCart({quantity: 1, product}))
     }
 }
+
 const styles = StyleSheet.create({
     container: {
         width: width / 2 - 20,
