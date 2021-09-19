@@ -15,28 +15,28 @@ import ListItem from './ListItem'
 import axios from "axios"
 import baseURL from "../../assets/common/baseUrl"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-// import EasyButton from "../../Shared/StyledComponents/EasyButton";
+import EasyButton from "../../Shared/StyledComponents/EasyButton";
 
 var { height, width } = Dimensions.get("window")
 
 const ListHeader = () => {
-    return(
+    return (
         <View
             elevation={1}
             style={styles.listHeader}
         >
             <View style={styles.headerItem}></View>
             <View style={styles.headerItem}>
-                <Text style={{ fontWeight: '600'}}>Brand</Text>
+                <Text style={{ fontWeight: '600' }}>Brand</Text>
             </View>
             <View style={styles.headerItem}>
-                <Text style={{ fontWeight: '600'}}>Name</Text>
+                <Text style={{ fontWeight: '600' }}>Name</Text>
             </View>
             <View style={styles.headerItem}>
-                <Text style={{ fontWeight: '600'}}>Category</Text>
+                <Text style={{ fontWeight: '600' }}>Category</Text>
             </View>
             <View style={styles.headerItem}>
-                <Text style={{ fontWeight: '600'}}>Price</Text>
+                <Text style={{ fontWeight: '600' }}>Price</Text>
             </View>
         </View>
     )
@@ -77,20 +77,30 @@ const Products = (props) => {
         )
     )
 
-    // const searchProduct = (text) => {
-    //     if (text == "") {
-    //         setProductFilter(productList)
-    //     }
-    //     setProductFilter(
-    //         productList.filter((i) => 
-    //             i.name.toLowerCase().includes(text.toLowerCase())
-    //         )
-    //     )
-    // }
-
+    const searchProduct = (text) => {
+        if (text == "") {
+            setProductFilter(productList)
+        }
+        setProductFilter(
+            productList.filter((i) =>
+                i.name.toLowerCase().includes(text.toLowerCase())
+            )
+        )
+    }
+    const deleteProduct = (id) => {
+        axios
+            .delete(`${baseURL}products/${id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((res) => {
+                const products = productFilter.filter((item) => item.id !== id)
+                setProductFilter(products)
+            })
+            .catch((error) => console.log(error));
+    }
     return (
         <View style={styles.container}>
-            {/* <View style={styles.buttonContainer}>
+            <View style={styles.buttonContainer}>
             <EasyButton
                 secondary
                 medium
@@ -115,14 +125,14 @@ const Products = (props) => {
                 <Icon name="plus" size={18} color="white" />
                 <Text style={styles.buttonText}>Categories</Text>
             </EasyButton>
-        </View> */}
+        </View>
             <View>
                 <Header searchBar rounded>
                     <Item style={{ padding: 5 }}>
                         <Icon name="search" />
                         <Input
                             placeholder="Search"
-                        // onChangeText={(text) => searchProduct(text)}
+                            onChangeText={(text) => searchProduct(text)}
                         />
                     </Item>
                 </Header>
@@ -142,6 +152,7 @@ const Products = (props) => {
                             {...item}
                             navigation={props.navigation}
                             index={index}
+                            delete={deleteProduct}
                         />
                     )}
                     keyExtractor={(item) => item.id}
